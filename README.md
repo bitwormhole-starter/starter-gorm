@@ -1,2 +1,2 @@
-# starter-gorm
+# libgorm
 Starter for using database with Gorm
