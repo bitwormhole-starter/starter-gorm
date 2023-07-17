@@ -197,6 +197,80 @@ func (inst*p6553b6c73b_internal_DefaultDriverManager) getDrivers(ie application.
 
 
 
+// type p6553b6c73.DefaultTableManager in package:github.com/starter-go/libgorm/internal
+//
+// id:com-6553b6c73b54fb77-internal-DefaultTableManager
+// class:
+// alias:alias-512a309140d0ad99eb1c95c8dc0d02f9-TableManager
+// scope:singleton
+//
+type p6553b6c73b_internal_DefaultTableManager struct {
+}
+
+func (inst* p6553b6c73b_internal_DefaultTableManager) register(cr application.ComponentRegistry) error {
+	r := cr.NewRegistration()
+	r.ID = "com-6553b6c73b54fb77-internal-DefaultTableManager"
+	r.Classes = ""
+	r.Aliases = "alias-512a309140d0ad99eb1c95c8dc0d02f9-TableManager"
+	r.Scope = "singleton"
+	r.NewFunc = inst.new
+	r.InjectFunc = inst.inject
+	return r.Commit()
+}
+
+func (inst* p6553b6c73b_internal_DefaultTableManager) new() any {
+    return &p6553b6c73.DefaultTableManager{}
+}
+
+func (inst* p6553b6c73b_internal_DefaultTableManager) inject(injext application.InjectionExt, instance any) error {
+	ie := injext
+	com := instance.(*p6553b6c73.DefaultTableManager)
+	nop(ie, com)
+
+	
+    com.TRs = inst.getTRs(ie)
+    com.DataSources = inst.getDataSources(ie)
+    com.GlobalTableNamePrefix = inst.getGlobalTableNamePrefix(ie)
+    com.AutoMigrate = inst.getAutoMigrate(ie)
+    com.SourceName = inst.getSourceName(ie)
+
+
+    return nil
+}
+
+
+func (inst*p6553b6c73b_internal_DefaultTableManager) getTRs(ie application.InjectionExt)[]p512a30914.TableRegistry{
+    dst := make([]p512a30914.TableRegistry, 0)
+    src := ie.ListComponents(".class-512a309140d0ad99eb1c95c8dc0d02f9-TableRegistry")
+    for _, item1 := range src {
+        item2 := item1.(p512a30914.TableRegistry)
+        dst = append(dst, item2)
+    }
+    return dst
+}
+
+
+func (inst*p6553b6c73b_internal_DefaultTableManager) getDataSources(ie application.InjectionExt)p512a30914.DataSourceManager{
+    return ie.GetComponent("#alias-512a309140d0ad99eb1c95c8dc0d02f9-DataSourceManager").(p512a30914.DataSourceManager)
+}
+
+
+func (inst*p6553b6c73b_internal_DefaultTableManager) getGlobalTableNamePrefix(ie application.InjectionExt)string{
+    return ie.GetString("${libgorm.auto-migrate.table-name-prefix}")
+}
+
+
+func (inst*p6553b6c73b_internal_DefaultTableManager) getAutoMigrate(ie application.InjectionExt)bool{
+    return ie.GetBool("${libgorm.auto-migrate.enabled}")
+}
+
+
+func (inst*p6553b6c73b_internal_DefaultTableManager) getSourceName(ie application.InjectionExt)string{
+    return ie.GetString("${libgorm.auto-migrate.datasource}")
+}
+
+
+
 // type p6553b6c73.MockDriver in package:github.com/starter-go/libgorm/internal
 //
 // id:com-6553b6c73b54fb77-internal-MockDriver

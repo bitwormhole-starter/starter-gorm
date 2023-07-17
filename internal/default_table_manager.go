@@ -37,10 +37,7 @@ func (inst *DefaultTableManager) Life() *application.Life {
 }
 
 func (inst *DefaultTableManager) init() error {
-	if inst.AutoMigrate {
-		return inst.migrate()
-	}
-	return nil
+	return inst.migrate()
 }
 
 func (inst *DefaultTableManager) migrate() error {
@@ -75,7 +72,11 @@ func (inst *DefaultTableManager) migrate() error {
 		vlog.Info("auto-migrate table: '%s'", name)
 	}
 
-	return db.AutoMigrate(dst...)
+	if inst.AutoMigrate {
+		return db.AutoMigrate(dst...)
+	}
+
+	return nil
 }
 
 func (inst *DefaultTableManager) getTableName(tr *libgorm.TableRegistration, o any) string {
