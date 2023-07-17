@@ -8,7 +8,7 @@ require (
 	github.com/starter-go/afs v0.9.1 // indirect
 	github.com/starter-go/base v0.9.5 // indirect
 	github.com/starter-go/configen v0.9.2 // indirect
-	github.com/starter-go/vlog v0.9.4 // indirect
+	github.com/starter-go/vlog v0.9.4 // direct
 )
 
 require (
