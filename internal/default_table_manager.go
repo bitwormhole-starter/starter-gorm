@@ -8,13 +8,6 @@ import (
 	"github.com/starter-go/vlog"
 )
 
-// TableNameGetter 用于从实体原型获取表名
-type TableNameGetter interface {
-	TableName() string
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
 // DefaultTableManager 是默认的表格管理器
 type DefaultTableManager struct {
 
@@ -86,7 +79,7 @@ func (inst *DefaultTableManager) migrate() error {
 }
 
 func (inst *DefaultTableManager) getTableName(tr *libgorm.TableRegistration, o any) string {
-	getter, ok := o.(TableNameGetter)
+	getter, ok := o.(libgorm.TableNameGetter)
 	if ok {
 		return getter.TableName()
 	}

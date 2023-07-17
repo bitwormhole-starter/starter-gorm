@@ -1,5 +1,12 @@
 package libgorm
 
+import "github.com/starter-go/vlog"
+
+// TableNameGetter 用于从实体原型获取表名
+type TableNameGetter interface {
+	TableName() string
+}
+
 // TableGroup 表示一组相关的表格
 type TableGroup struct {
 	Name         string
@@ -46,6 +53,26 @@ func (inst *TableGroupBuilder) Table(t *TableRegistration) *TableGroupBuilder {
 		inst.list = append(inst.list, t)
 	}
 	return inst
+}
+
+// Entity 以 Entity 的形式添加一个表格
+func (inst *TableGroupBuilder) Entity(ent any) *TableGroupBuilder {
+
+	getter, ok := ent.(TableNameGetter)
+	if !ok {
+		vlog.Warn("no TableNameGetter for entity '%v', ignored", ent)
+		return inst
+	}
+
+	name := getter.TableName()
+
+	tr := &TableRegistration{}
+	tr.Group = inst.group
+	tr.NameGetter = getter.TableName
+	tr.SimpleName = name
+	tr.PrototypeGetter = func() any { return ent }
+
+	return inst.Table(tr)
 }
 
 // Create 创建表格组
