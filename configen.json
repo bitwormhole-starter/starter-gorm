@@ -1,0 +1,21 @@
+{
+    "configen": {
+        "version": "4",
+        "sources": [
+            {
+                "id": "libgorm",
+                "path": "internal",
+                "r": true
+            }
+        ],
+        "destinations": [
+            {
+                "id": "libgorm",
+                "path": "gen/gen4libgorm",
+                "sources": [
+                    "libgorm"
+                ]
+            }
+        ]
+    }
+}
