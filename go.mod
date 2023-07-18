@@ -14,6 +14,6 @@ require (
 require (
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
-	github.com/starter-go/application v0.9.7
+	github.com/starter-go/application v0.9.9
 	github.com/starter-go/starter v1.0.0
 )

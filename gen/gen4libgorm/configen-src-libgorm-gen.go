@@ -1,5 +1,6 @@
 package gen4libgorm
 import (
+    p0ef6f2938 "github.com/starter-go/application"
     p512a30914 "github.com/starter-go/libgorm"
     p6553b6c73 "github.com/starter-go/libgorm/internal"
      "github.com/starter-go/application"
@@ -228,6 +229,7 @@ func (inst* p6553b6c73b_internal_DefaultTableManager) inject(injext application.
 	nop(ie, com)
 
 	
+    com.Namers = inst.getNamers(ie)
     com.TRs = inst.getTRs(ie)
     com.DataSources = inst.getDataSources(ie)
     com.GlobalTableNamePrefix = inst.getGlobalTableNamePrefix(ie)
@@ -236,6 +238,17 @@ func (inst* p6553b6c73b_internal_DefaultTableManager) inject(injext application.
 
 
     return nil
+}
+
+
+func (inst*p6553b6c73b_internal_DefaultTableManager) getNamers(ie application.InjectionExt)[]p512a30914.TableNamerRegistry{
+    dst := make([]p512a30914.TableNamerRegistry, 0)
+    src := ie.ListComponents(".class-512a309140d0ad99eb1c95c8dc0d02f9-TableNamerRegistry")
+    for _, item1 := range src {
+        item2 := item1.(p512a30914.TableNamerRegistry)
+        dst = append(dst, item2)
+    }
+    return dst
 }
 
 
@@ -267,6 +280,56 @@ func (inst*p6553b6c73b_internal_DefaultTableManager) getAutoMigrate(ie applicati
 
 func (inst*p6553b6c73b_internal_DefaultTableManager) getSourceName(ie application.InjectionExt)string{
     return ie.GetString("${libgorm.auto-migrate.datasource}")
+}
+
+
+
+// type p6553b6c73.DefaultTableNamer in package:github.com/starter-go/libgorm/internal
+//
+// id:com-6553b6c73b54fb77-internal-DefaultTableNamer
+// class:class-512a309140d0ad99eb1c95c8dc0d02f9-TableNamerRegistry
+// alias:
+// scope:singleton
+//
+type p6553b6c73b_internal_DefaultTableNamer struct {
+}
+
+func (inst* p6553b6c73b_internal_DefaultTableNamer) register(cr application.ComponentRegistry) error {
+	r := cr.NewRegistration()
+	r.ID = "com-6553b6c73b54fb77-internal-DefaultTableNamer"
+	r.Classes = "class-512a309140d0ad99eb1c95c8dc0d02f9-TableNamerRegistry"
+	r.Aliases = ""
+	r.Scope = "singleton"
+	r.NewFunc = inst.new
+	r.InjectFunc = inst.inject
+	return r.Commit()
+}
+
+func (inst* p6553b6c73b_internal_DefaultTableNamer) new() any {
+    return &p6553b6c73.DefaultTableNamer{}
+}
+
+func (inst* p6553b6c73b_internal_DefaultTableNamer) inject(injext application.InjectionExt, instance any) error {
+	ie := injext
+	com := instance.(*p6553b6c73.DefaultTableNamer)
+	nop(ie, com)
+
+	
+    com.Context = inst.getContext(ie)
+    com.TableNamesPropResPath = inst.getTableNamesPropResPath(ie)
+
+
+    return nil
+}
+
+
+func (inst*p6553b6c73b_internal_DefaultTableNamer) getContext(ie application.InjectionExt)p0ef6f2938.Context{
+    return ie.GetContext()
+}
+
+
+func (inst*p6553b6c73b_internal_DefaultTableNamer) getTableNamesPropResPath(ie application.InjectionExt)string{
+    return ie.GetString("${libgorm.table-group-namespaces.properties}")
 }
 
 

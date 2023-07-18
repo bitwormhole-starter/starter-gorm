@@ -14,14 +14,16 @@ type DefaultTableManager struct {
 	//starter:component
 	_as func(libgorm.TableManager) //starter:as("#")
 
-	TRs         []libgorm.TableRegistry   //starter:inject(".")
-	DataSources libgorm.DataSourceManager //starter:inject("#")
+	Namers      []libgorm.TableNamerRegistry //starter:inject(".")
+	TRs         []libgorm.TableRegistry      //starter:inject(".")
+	DataSources libgorm.DataSourceManager    //starter:inject("#")
 
 	GlobalTableNamePrefix string //starter:inject("${libgorm.auto-migrate.table-name-prefix}")
 	AutoMigrate           bool   //starter:inject("${libgorm.auto-migrate.enabled}")
 	SourceName            string //starter:inject("${libgorm.auto-migrate.datasource}")
 
-	cached []*libgorm.TableRegistration
+	cached     []*libgorm.TableRegistration
+	namerChain tableNamerChain
 }
 
 func (inst *DefaultTableManager) _impl() application.Lifecycle {
@@ -110,6 +112,9 @@ func (inst *DefaultTableManager) getAll() ([]*libgorm.TableRegistration, error) 
 }
 
 func (inst *DefaultTableManager) load() ([]*libgorm.TableRegistration, error) {
+
+	inst.namerChain.init(inst.Namers)
+
 	src := inst.TRs
 	dst := make([]*libgorm.TableRegistration, 0)
 	for _, r1 := range src {
@@ -123,6 +128,10 @@ func (inst *DefaultTableManager) load() ([]*libgorm.TableRegistration, error) {
 }
 
 func (inst *DefaultTableManager) prepareGroup(g *libgorm.TableGroup) {
-	prefix := inst.GlobalTableNamePrefix + g.Name
-	g.PrefixSetter(prefix)
+	fn := g.NamerSetter
+	namer := &inst.namerChain
+	if fn == nil {
+		return
+	}
+	fn(namer)
 }

@@ -34,6 +34,7 @@ func (inst*autoRegistrar) addAll() error {
     inst.register(&p6553b6c73b_internal_DefaultDatasourceManager{})
     inst.register(&p6553b6c73b_internal_DefaultDriverManager{})
     inst.register(&p6553b6c73b_internal_DefaultTableManager{})
+    inst.register(&p6553b6c73b_internal_DefaultTableNamer{})
     inst.register(&p6553b6c73b_internal_MockDriver{})
 
 
