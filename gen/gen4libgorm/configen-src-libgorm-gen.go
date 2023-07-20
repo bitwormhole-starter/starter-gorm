@@ -6,6 +6,56 @@ import (
      "github.com/starter-go/application"
 )
 
+// type p6553b6c73.DataSourceAgent in package:github.com/starter-go/libgorm/internal
+//
+// id:com-6553b6c73b54fb77-internal-DataSourceAgent
+// class:
+// alias:alias-512a309140d0ad99eb1c95c8dc0d02f9-Agent
+// scope:singleton
+//
+type p6553b6c73b_internal_DataSourceAgent struct {
+}
+
+func (inst* p6553b6c73b_internal_DataSourceAgent) register(cr application.ComponentRegistry) error {
+	r := cr.NewRegistration()
+	r.ID = "com-6553b6c73b54fb77-internal-DataSourceAgent"
+	r.Classes = ""
+	r.Aliases = "alias-512a309140d0ad99eb1c95c8dc0d02f9-Agent"
+	r.Scope = "singleton"
+	r.NewFunc = inst.new
+	r.InjectFunc = inst.inject
+	return r.Commit()
+}
+
+func (inst* p6553b6c73b_internal_DataSourceAgent) new() any {
+    return &p6553b6c73.DataSourceAgent{}
+}
+
+func (inst* p6553b6c73b_internal_DataSourceAgent) inject(injext application.InjectionExt, instance any) error {
+	ie := injext
+	com := instance.(*p6553b6c73.DataSourceAgent)
+	nop(ie, com)
+
+	
+    com.DSM = inst.getDSM(ie)
+    com.SourceName = inst.getSourceName(ie)
+
+
+    return nil
+}
+
+
+func (inst*p6553b6c73b_internal_DataSourceAgent) getDSM(ie application.InjectionExt)p512a30914.DataSourceManager{
+    return ie.GetComponent("#alias-512a309140d0ad99eb1c95c8dc0d02f9-DataSourceManager").(p512a30914.DataSourceManager)
+}
+
+
+func (inst*p6553b6c73b_internal_DataSourceAgent) getSourceName(ie application.InjectionExt)string{
+    return ie.GetString("${libgorm.agent.source}")
+}
+
+
+
 // type p6553b6c73.DefaultDatasource in package:github.com/starter-go/libgorm/internal
 //
 // id:com-6553b6c73b54fb77-internal-DefaultDatasource

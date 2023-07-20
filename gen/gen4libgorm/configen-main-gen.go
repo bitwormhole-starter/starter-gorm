@@ -30,6 +30,7 @@ func (inst *autoRegistrar) register(factory comFactory) error {
 func (inst*autoRegistrar) addAll() error {
 
     
+    inst.register(&p6553b6c73b_internal_DataSourceAgent{})
     inst.register(&p6553b6c73b_internal_DefaultDatasource{})
     inst.register(&p6553b6c73b_internal_DefaultDatasourceManager{})
     inst.register(&p6553b6c73b_internal_DefaultDriverManager{})

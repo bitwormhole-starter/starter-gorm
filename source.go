@@ -18,3 +18,8 @@ type DataSourceRegistration struct {
 type DataSourceManager interface {
 	GetDataSource(name string) (DataSource, error)
 }
+
+// Agent 是默认的数据源代理
+type Agent interface {
+	DB(db *gorm.DB) *gorm.DB
+}
