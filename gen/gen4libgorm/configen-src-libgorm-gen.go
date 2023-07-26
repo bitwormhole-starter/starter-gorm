@@ -3,6 +3,7 @@ import (
     p0ef6f2938 "github.com/starter-go/application"
     p512a30914 "github.com/starter-go/libgorm"
     p6553b6c73 "github.com/starter-go/libgorm/internal"
+    p273dbed52 "github.com/starter-go/libgorm/internal/mock"
      "github.com/starter-go/application"
 )
 
@@ -384,19 +385,19 @@ func (inst*p6553b6c73b_internal_DefaultTableNamer) getTableNamesPropResPath(ie a
 
 
 
-// type p6553b6c73.MockDriver in package:github.com/starter-go/libgorm/internal
+// type p273dbed52.Driver in package:github.com/starter-go/libgorm/internal/mock
 //
-// id:com-6553b6c73b54fb77-internal-MockDriver
+// id:com-273dbed527f9f8b7-mock-Driver
 // class:class-512a309140d0ad99eb1c95c8dc0d02f9-Driver
 // alias:
 // scope:singleton
 //
-type p6553b6c73b_internal_MockDriver struct {
+type p273dbed527_mock_Driver struct {
 }
 
-func (inst* p6553b6c73b_internal_MockDriver) register(cr application.ComponentRegistry) error {
+func (inst* p273dbed527_mock_Driver) register(cr application.ComponentRegistry) error {
 	r := cr.NewRegistration()
-	r.ID = "com-6553b6c73b54fb77-internal-MockDriver"
+	r.ID = "com-273dbed527f9f8b7-mock-Driver"
 	r.Classes = "class-512a309140d0ad99eb1c95c8dc0d02f9-Driver"
 	r.Aliases = ""
 	r.Scope = "singleton"
@@ -405,13 +406,13 @@ func (inst* p6553b6c73b_internal_MockDriver) register(cr application.ComponentRe
 	return r.Commit()
 }
 
-func (inst* p6553b6c73b_internal_MockDriver) new() any {
-    return &p6553b6c73.MockDriver{}
+func (inst* p273dbed527_mock_Driver) new() any {
+    return &p273dbed52.Driver{}
 }
 
-func (inst* p6553b6c73b_internal_MockDriver) inject(injext application.InjectionExt, instance any) error {
+func (inst* p273dbed527_mock_Driver) inject(injext application.InjectionExt, instance any) error {
 	ie := injext
-	com := instance.(*p6553b6c73.MockDriver)
+	com := instance.(*p273dbed52.Driver)
 	nop(ie, com)
 
 	

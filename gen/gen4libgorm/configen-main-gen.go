@@ -30,13 +30,13 @@ func (inst *autoRegistrar) register(factory comFactory) error {
 func (inst*autoRegistrar) addAll() error {
 
     
+    inst.register(&p273dbed527_mock_Driver{})
     inst.register(&p6553b6c73b_internal_DataSourceAgent{})
     inst.register(&p6553b6c73b_internal_DefaultDatasource{})
     inst.register(&p6553b6c73b_internal_DefaultDatasourceManager{})
     inst.register(&p6553b6c73b_internal_DefaultDriverManager{})
     inst.register(&p6553b6c73b_internal_DefaultTableManager{})
     inst.register(&p6553b6c73b_internal_DefaultTableNamer{})
-    inst.register(&p6553b6c73b_internal_MockDriver{})
 
 
     return nil
