@@ -1,4 +1,4 @@
-package gen4libgorm
+package gen4demo1
 
 import "github.com/starter-go/application"
 
@@ -30,13 +30,10 @@ func (inst *autoRegistrar) register(factory comFactory) error {
 func (inst*autoRegistrar) addAll() error {
 
     
-    inst.register(&p273dbed527_mock_Driver{})
-    inst.register(&p6553b6c73b_internal_DataSourceAgent{})
-    inst.register(&p6553b6c73b_internal_DatabaseStarter{})
-    inst.register(&p6553b6c73b_internal_DefaultDatasource{})
-    inst.register(&p6553b6c73b_internal_DefaultDatasourceManager{})
-    inst.register(&p6553b6c73b_internal_DefaultDriverManager{})
-    inst.register(&p6553b6c73b_internal_GroupManagerImpl{})
+    inst.register(&p1b6e41313c_demo1_TaDaoImpl{})
+    inst.register(&p1b6e41313c_demo1_TableReg{})
+    inst.register(&p1b6e41313c_demo1_TbDaoImpl{})
+    inst.register(&p1b6e41313c_demo1_TcDaoImpl{})
 
 
     return nil

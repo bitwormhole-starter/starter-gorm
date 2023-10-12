@@ -2,6 +2,7 @@ package internal
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/starter-go/application"
 	"github.com/starter-go/libgorm"
@@ -23,6 +24,7 @@ type DefaultDatasource struct {
 	Password string //starter:inject("${datasource.default.password}")
 	Database string //starter:inject("${datasource.default.database}")
 	Enabled  bool   //starter:inject("${datasource.default.enabled}")
+	Groups   string //starter:inject("${datasource.default.groups}")
 
 	db *gorm.DB
 }
@@ -45,10 +47,27 @@ func (inst *DefaultDatasource) init() error {
 
 // Registration ...
 func (inst *DefaultDatasource) Registration() *libgorm.DataSourceRegistration {
+	groups := inst.getGroupNameList()
 	return &libgorm.DataSourceRegistration{
+		Enabled:    inst.Enabled,
 		Name:       inst.Name,
 		DataSource: inst,
+		Groups:     groups,
 	}
+}
+
+func (inst *DefaultDatasource) getGroupNameList() []string {
+	const sep = ","
+	src := strings.Split(inst.Groups, sep)
+	dst := make([]string, 0)
+	for _, name := range src {
+		name = strings.TrimSpace(name)
+		if name == "" {
+			continue
+		}
+		dst = append(dst, name)
+	}
+	return dst
 }
 
 // DB ...

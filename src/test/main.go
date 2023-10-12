@@ -9,7 +9,7 @@ import (
 
 func main() {
 
-	m := modgorm.Module()
+	m := modgorm.ModuleForTest()
 
 	i := starter.Init(os.Args)
 	i.MainModule(m)

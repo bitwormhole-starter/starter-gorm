@@ -6,6 +6,11 @@
                 "id": "libgorm",
                 "path": "internal",
                 "r": true
+            },
+            {
+                "id": "demo1",
+                "path": "src/demo/demo1",
+                "r": true
             }
         ],
         "destinations": [
@@ -14,6 +19,13 @@
                 "path": "gen/gen4libgorm",
                 "sources": [
                     "libgorm"
+                ]
+            },
+            {
+                "id": "demo1",
+                "path": "gen/gen4demo1",
+                "sources": [
+                    "demo1"
                 ]
             }
         ]

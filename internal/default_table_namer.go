@@ -1,72 +1,62 @@
 package internal
 
-import (
-	"sync"
+// // DefaultTableNamer 是默认的数据表命名工具
+// type DefaultTableNamer struct {
 
-	"github.com/starter-go/application"
-	"github.com/starter-go/application/properties"
-	"github.com/starter-go/base/safe"
-	"github.com/starter-go/libgorm"
-	"github.com/starter-go/vlog"
-)
+// 	//starter:component
+// 	_as func(libgorm.TableNamerRegistry) //starter:as(".")
 
-// DefaultTableNamer 是默认的数据表命名工具
-type DefaultTableNamer struct {
+// 	Context               application.Context //starter:inject("context")
+// 	TableNamesPropResPath string              //starter:inject("${libgorm.table-group-namespaces.properties}")
 
-	//starter:component
-	_as func(libgorm.TableNamerRegistry) //starter:as(".")
+// 	mappings map[string]string // map[namespace] table_name_prefix
+// 	mutex    sync.Mutex
+// }
 
-	Context               application.Context //starter:inject("context")
-	TableNamesPropResPath string              //starter:inject("${libgorm.table-group-namespaces.properties}")
+// func (inst *DefaultTableNamer) _impl() (libgorm.TableNamer, libgorm.TableNamerRegistry) {
+// 	return inst, inst
+// }
 
-	mappings map[string]string // map[namespace] table_name_prefix
-	mutex    sync.Mutex
-}
+// // Registration ...
+// func (inst *DefaultTableNamer) Registration() *libgorm.TableNamerRegistration {
+// 	return &libgorm.TableNamerRegistration{
+// 		Priority: 0,
+// 		Namer:    inst,
+// 	}
+// }
 
-func (inst *DefaultTableNamer) _impl() (libgorm.TableNamer, libgorm.TableNamerRegistry) {
-	return inst, inst
-}
+// // GetName ...
+// func (inst *DefaultTableNamer) GetName(namespace, simpleName string) string {
+// 	prefix := inst.findPrefix(namespace)
+// 	return prefix + simpleName
+// }
 
-// Registration ...
-func (inst *DefaultTableNamer) Registration() *libgorm.TableNamerRegistration {
-	return &libgorm.TableNamerRegistration{
-		Priority: 0,
-		Namer:    inst,
-	}
-}
+// func (inst *DefaultTableNamer) findPrefix(namespace string) string {
 
-// GetName ...
-func (inst *DefaultTableNamer) GetName(namespace, simpleName string) string {
-	prefix := inst.findPrefix(namespace)
-	return prefix + simpleName
-}
+// 	inst.mutex.Lock()
+// 	defer inst.mutex.Unlock()
 
-func (inst *DefaultTableNamer) findPrefix(namespace string) string {
+// 	mappings := inst.mappings
+// 	if mappings == nil {
+// 		mappings = inst.loadMappings()
+// 		inst.mappings = mappings
+// 	}
 
-	inst.mutex.Lock()
-	defer inst.mutex.Unlock()
+// 	prefix := mappings[namespace]
+// 	if prefix == "" {
+// 		prefix = "t_"
+// 		vlog.Warn("no namespace-to-prefix mapping for namespace: '%s'", namespace)
+// 	}
 
-	mappings := inst.mappings
-	if mappings == nil {
-		mappings = inst.loadMappings()
-		inst.mappings = mappings
-	}
+// 	return prefix
+// }
 
-	prefix := mappings[namespace]
-	if prefix == "" {
-		prefix = "t_"
-		vlog.Warn("no namespace-to-prefix mapping for namespace: '%s'", namespace)
-	}
-
-	return prefix
-}
-
-func (inst *DefaultTableNamer) loadMappings() map[string]string {
-	path := inst.TableNamesPropResPath
-	res := inst.Context.GetResources()
-	props, err := properties.LoadFromResource(path, res, safe.Fast())
-	if err != nil {
-		panic(err)
-	}
-	return props.Export(nil)
-}
+// func (inst *DefaultTableNamer) loadMappings() map[string]string {
+// 	path := inst.TableNamesPropResPath
+// 	res := inst.Context.GetResources()
+// 	props, err := properties.LoadFromResource(path, res, safe.Fast())
+// 	if err != nil {
+// 		panic(err)
+// 	}
+// 	return props.Export(nil)
+// }
