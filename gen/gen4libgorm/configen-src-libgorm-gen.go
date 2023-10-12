@@ -348,11 +348,11 @@ func (inst* p6553b6c73b_internal_GroupManagerImpl) inject(injext application.Inj
 }
 
 
-func (inst*p6553b6c73b_internal_GroupManagerImpl) getGroups(ie application.InjectionExt)[]p512a30914.TableGroupRegistry{
-    dst := make([]p512a30914.TableGroupRegistry, 0)
-    src := ie.ListComponents(".class-512a309140d0ad99eb1c95c8dc0d02f9-TableGroupRegistry")
+func (inst*p6553b6c73b_internal_GroupManagerImpl) getGroups(ie application.InjectionExt)[]p512a30914.GroupRegistry{
+    dst := make([]p512a30914.GroupRegistry, 0)
+    src := ie.ListComponents(".class-512a309140d0ad99eb1c95c8dc0d02f9-GroupRegistry")
     for _, item1 := range src {
-        item2 := item1.(p512a30914.TableGroupRegistry)
+        item2 := item1.(p512a30914.GroupRegistry)
         dst = append(dst, item2)
     }
     return dst

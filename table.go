@@ -13,7 +13,7 @@ type TableManager interface {
 // TableRegistration 表示一个表格的注册信息
 type TableRegistration struct {
 	SimpleName string
-	Group      *TableGroup
+	Group      *Group
 	Prototype  any // 原型
 }
 

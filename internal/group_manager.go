@@ -11,9 +11,9 @@ type GroupManagerImpl struct {
 	//starter:component
 	_as func(libgorm.GroupManager) //starter:as("#")
 
-	Groups []libgorm.TableGroupRegistry //starter:inject(".")
+	Groups []libgorm.GroupRegistry //starter:inject(".")
 
-	glist []*libgorm.TableGroup
+	glist []*libgorm.Group
 }
 
 func (inst *GroupManagerImpl) _impl() libgorm.GroupManager {
@@ -21,7 +21,7 @@ func (inst *GroupManagerImpl) _impl() libgorm.GroupManager {
 }
 
 // ListGroups ...
-func (inst *GroupManagerImpl) ListGroups() []*libgorm.TableGroup {
+func (inst *GroupManagerImpl) ListGroups() []*libgorm.Group {
 	dst := inst.glist
 	if dst == nil {
 		dst = inst.load()
@@ -30,9 +30,9 @@ func (inst *GroupManagerImpl) ListGroups() []*libgorm.TableGroup {
 	return dst
 }
 
-func (inst *GroupManagerImpl) load() []*libgorm.TableGroup {
+func (inst *GroupManagerImpl) load() []*libgorm.Group {
 	src := inst.Groups
-	dst := make([]*libgorm.TableGroup, 0)
+	dst := make([]*libgorm.Group, 0)
 	for _, r1 := range src {
 		g := r1.Group()
 		dst = append(dst, g)

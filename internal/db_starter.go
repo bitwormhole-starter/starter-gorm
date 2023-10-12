@@ -10,7 +10,7 @@ import (
 type loading struct {
 	db     libgorm.Database
 	source *libgorm.DataSourceRegistration
-	group  *libgorm.TableGroup
+	group  *libgorm.Group
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -108,7 +108,7 @@ func (inst *DatabaseStarter) loadGroup(l *loading) error {
 	return inst.migrate(l)
 }
 
-func (inst *DatabaseStarter) findGroup(name1 string) (*libgorm.TableGroup, error) {
+func (inst *DatabaseStarter) findGroup(name1 string) (*libgorm.Group, error) {
 	glist := inst.Groups.ListGroups()
 	for _, g := range glist {
 		name2 := g.Name

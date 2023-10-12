@@ -1,7 +1,7 @@
 package libgorm
 
-// TableGroup 表示一组相关的表格
-type TableGroup struct {
+// Group 表示一组相关的表格
+type Group struct {
 
 	// Namespace  string                  // group 的命名空间
 
@@ -12,14 +12,14 @@ type TableGroup struct {
 	Prototypes []any                   // 列出各种 entity 的原型
 }
 
-// TableGroupRegistry 是一个自动化的表格注册器
-type TableGroupRegistry interface {
+// GroupRegistry 是一个自动化的表格注册器
+type GroupRegistry interface {
 
 	// 取分组信息
-	Group() *TableGroup
+	Group() *Group
 }
 
 // GroupManager 分组管理器
 type GroupManager interface {
-	ListGroups() []*TableGroup
+	ListGroups() []*Group
 }

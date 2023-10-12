@@ -139,7 +139,7 @@ func (inst*p1b6e41313c_demo1_TcDaoImpl) getSrc(ie application.InjectionExt)p1b6e
 // type p1b6e41313.TableReg in package:github.com/starter-go/libgorm/src/demo/demo1
 //
 // id:com-1b6e41313c90dcc6-demo1-TableReg
-// class:class-512a309140d0ad99eb1c95c8dc0d02f9-TableGroupRegistry
+// class:class-512a309140d0ad99eb1c95c8dc0d02f9-GroupRegistry
 // alias:alias-1b6e41313c90dcc6ce0464e19d3529ce-Source
 // scope:singleton
 //
@@ -149,7 +149,7 @@ type p1b6e41313c_demo1_TableReg struct {
 func (inst* p1b6e41313c_demo1_TableReg) register(cr application.ComponentRegistry) error {
 	r := cr.NewRegistration()
 	r.ID = "com-1b6e41313c90dcc6-demo1-TableReg"
-	r.Classes = "class-512a309140d0ad99eb1c95c8dc0d02f9-TableGroupRegistry"
+	r.Classes = "class-512a309140d0ad99eb1c95c8dc0d02f9-GroupRegistry"
 	r.Aliases = "alias-1b6e41313c90dcc6ce0464e19d3529ce-Source"
 	r.Scope = "singleton"
 	r.NewFunc = inst.new

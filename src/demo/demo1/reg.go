@@ -11,7 +11,7 @@ import (
 type TableReg struct {
 
 	//starter:component
-	_as func(libgorm.TableGroupRegistry, Source) //starter:as(".","#")
+	_as func(libgorm.GroupRegistry, Source) //starter:as(".","#")
 
 	Prefix string //starter:inject("table-group.demo1.table-name-prefix")
 
@@ -27,7 +27,7 @@ func (inst *TableReg) init(c *libgorm.TableContext) {
 }
 
 // Group ...
-func (inst *TableReg) Group() *libgorm.TableGroup {
+func (inst *TableReg) Group() *libgorm.Group {
 
 	list := make([]any, 0)
 	list = append(list, &TableA{})
@@ -38,7 +38,7 @@ func (inst *TableReg) Group() *libgorm.TableGroup {
 	prefix := inst.Prefix
 	theTableNamePrefix = prefix
 
-	return &libgorm.TableGroup{
+	return &libgorm.Group{
 		Enabled: true,
 		Name:    "default",
 		//	Namespace:  "src/demo/demo1",
