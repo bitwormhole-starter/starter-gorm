@@ -2,8 +2,8 @@ package demo1
 
 import "github.com/starter-go/libgorm"
 
-// Source ... 本组数据源
-type Source interface {
+// MyAgent ... 本组数据源代理
+type MyAgent interface {
 	libgorm.Agent
 }
 

@@ -5,50 +5,57 @@ import (
 	"gorm.io/gorm"
 )
 
-////////////////////////////////////////////////////////////////////////////////
-
 // TableReg ...
 type TableReg struct {
 
 	//starter:component
-	_as func(libgorm.GroupRegistry, Source) //starter:as(".","#")
+	_as func(libgorm.GroupRegistry, MyAgent) //starter:as(".","#")
 
-	Prefix string //starter:inject("table-group.demo1.table-name-prefix")
+	DSMan      libgorm.DataSourceManager //starter:inject("#")
+	Prefix     string                    //starter:inject("datagroup.demo1.table-name-prefix")
+	URI        string                    //starter:inject("datagroup.demo1.uri")
+	SourceName string                    //starter:inject("datagroup.demo1.datasource")
 
-	agent libgorm.DatabaseAgent
+	agent libgorm.DataSourceAgent
 }
 
 func (inst *TableReg) _impl() {
 	inst._as(inst, inst)
 }
 
-func (inst *TableReg) init(c *libgorm.TableContext) {
-	inst.agent.Init(c.Database)
+// Groups ...
+func (inst *TableReg) Groups() []*libgorm.GroupRegistration {
+
+	prefix := inst.Prefix
+	theTableNamePrefix = prefix
+
+	r1 := &libgorm.GroupRegistration{
+		URI:    "uri:datagroup:demo1",
+		Prefix: prefix,
+		Group:  inst,
+		Source: inst.SourceName,
+	}
+
+	return []*libgorm.GroupRegistration{r1}
 }
 
-// Group ...
-func (inst *TableReg) Group() *libgorm.Group {
+// Prototypes ...
+func (inst *TableReg) Prototypes() []any {
 
+	// tables
 	list := make([]any, 0)
 	list = append(list, &TableA{})
 	list = append(list, &TableB{})
 	list = append(list, &TableC{})
 
-	// prefix
-	prefix := inst.Prefix
-	theTableNamePrefix = prefix
-
-	return &libgorm.Group{
-		Enabled: true,
-		Name:    "default",
-		//	Namespace:  "src/demo/demo1",
-		Prefix:     prefix,
-		Prototypes: list,
-		OnInit:     inst.init,
-	}
+	return list
 }
 
 // DB ...
 func (inst *TableReg) DB(db *gorm.DB) *gorm.DB {
-	return inst.agent.DB(db)
+	agent := &inst.agent
+	if !agent.Ready() {
+		agent.Init(inst.DSMan, inst.SourceName)
+	}
+	return agent.DB(db)
 }

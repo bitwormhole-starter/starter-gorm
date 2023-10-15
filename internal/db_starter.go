@@ -1,19 +1,10 @@
 package internal
 
 import (
-	"fmt"
-
 	"github.com/starter-go/application"
 	"github.com/starter-go/libgorm"
+	"github.com/starter-go/vlog"
 )
-
-type loading struct {
-	db     libgorm.Database
-	source *libgorm.DataSourceRegistration
-	group  *libgorm.Group
-}
-
-////////////////////////////////////////////////////////////////////////////////
 
 // DatabaseStarter 数据库模块启动器
 type DatabaseStarter struct {
@@ -24,10 +15,7 @@ type DatabaseStarter struct {
 	Sources libgorm.DataSourceManager //starter:inject("#")
 	Groups  libgorm.GroupManager      //starter:inject("#")
 
-	AutoMigrate bool //starter:inject("${libgorm.auto-migrate.enabled}")
-
-	// GlobalTableNamePrefix string //starter:inject("${libgorm.auto-migrate.table-name-prefix}")
-	// SourceName            string //starter:inject("${libgorm.auto-migrate.datasource}")
+	AutoMigrate bool //starter:inject("${data.enable-auto-migrate}")
 
 }
 
@@ -43,88 +31,33 @@ func (inst *DatabaseStarter) Life() *application.Life {
 }
 
 func (inst *DatabaseStarter) init() error {
-	return inst.loadAll()
+	return inst.logAll()
 }
 
-func (inst *DatabaseStarter) loadAll() error {
-	l := &loading{}
-	dsm := inst.Sources
-	srcNameList := dsm.ListNames()
-	for _, name := range srcNameList {
-		ds, err := dsm.GetDataSource(name)
-		if err != nil {
-			return err
-		}
-		l.source = ds.Registration()
-		l.group = nil
-		l.db = nil
-		err = inst.loadSource(l)
-		if err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
-func (inst *DatabaseStarter) loadSource(l *loading) error {
-	ds := l.source
-	if !ds.Enabled {
-		return nil
-	}
-
-	db, err := ds.DataSource.DB()
+func (inst *DatabaseStarter) logAll() error {
+	err := inst.listSources()
 	if err != nil {
 		return err
 	}
-	dbb := libgorm.DatabaseBuilder{DB: db}
-	l.db = dbb.Create()
+	return inst.listGroups()
+}
 
-	groups := ds.Groups
-	for _, groupName := range groups {
-		group, err := inst.findGroup(groupName)
+func (inst *DatabaseStarter) listSources() error {
+	list := inst.Sources.ListAliases()
+	for i, alias := range list {
+		_, err := inst.Sources.GetDataSource(alias)
 		if err != nil {
 			return err
 		}
-		l.group = group
-		err = inst.loadGroup(l)
-		if err != nil {
-			return err
-		}
+		vlog.Info("libgorm.data.source[%d].alias: %s", i, alias)
 	}
 	return nil
 }
 
-func (inst *DatabaseStarter) loadGroup(l *loading) error {
-	g := l.group
-	if !g.Enabled {
-		return nil
+func (inst *DatabaseStarter) listGroups() error {
+	list := inst.Groups.ListGroups()
+	for i, g := range list {
+		vlog.Info("libgorm.data.group[%d].alias: %s", i, g.Alias)
 	}
-	ctx := &libgorm.TableContext{}
-	ctx.Database = l.db
-	fnOnInit := g.OnInit
-	if fnOnInit != nil {
-		fnOnInit(ctx)
-	}
-	return inst.migrate(l)
-}
-
-func (inst *DatabaseStarter) findGroup(name1 string) (*libgorm.Group, error) {
-	glist := inst.Groups.ListGroups()
-	for _, g := range glist {
-		name2 := g.Name
-		if name1 == name2 {
-			return g, nil
-		}
-	}
-	return nil, fmt.Errorf("no data-table-group with name: %s", name1)
-}
-
-func (inst *DatabaseStarter) migrate(l *loading) error {
-	if !inst.AutoMigrate {
-		return nil
-	}
-	group := l.group
-	list := group.Prototypes
-	db := l.db.DB()
-	return db.AutoMigrate(list...)
+	return nil
 }

@@ -1,9 +1,9 @@
 package libgorm
 
-// TableContext 是表格组的初始化参数
-type TableContext struct {
-	Database Database
-}
+// // TableContext 是表格组的初始化参数
+// type TableContext struct {
+// 	Database Database
+// }
 
 // TableManager 是全局的表格管理器
 type TableManager interface {

@@ -31,10 +31,9 @@ func (inst*autoRegistrar) addAll() error {
 
     
     inst.register(&p273dbed527_mock_Driver{})
-    inst.register(&p6553b6c73b_internal_DataSourceAgent{})
     inst.register(&p6553b6c73b_internal_DatabaseStarter{})
-    inst.register(&p6553b6c73b_internal_DefaultDatasource{})
     inst.register(&p6553b6c73b_internal_DefaultDatasourceManager{})
+    inst.register(&p6553b6c73b_internal_DefaultDatasourceRegistry{})
     inst.register(&p6553b6c73b_internal_DefaultDriverManager{})
     inst.register(&p6553b6c73b_internal_GroupManagerImpl{})
 

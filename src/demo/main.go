@@ -1,15 +1,14 @@
 package main
 
 import (
-	"github.com/starter-go/libgorm/modgorm"
+	"os"
+
+	"github.com/starter-go/libgorm/modules/libgorm"
 	"github.com/starter-go/starter"
 )
 
 func main() {
-
-	m := modgorm.Module()
-
-	i := starter.Init(nil)
-	i.MainModule(m)
+	i := starter.Init(os.Args)
+	i.MainModule(libgorm.Module())
 	i.WithPanic(true).Run()
 }

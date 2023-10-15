@@ -1,5 +1,6 @@
 package gen4demo1
 import (
+    p512a30914 "github.com/starter-go/libgorm"
     p1b6e41313 "github.com/starter-go/libgorm/src/demo/demo1"
      "github.com/starter-go/application"
 )
@@ -42,8 +43,8 @@ func (inst* p1b6e41313c_demo1_TaDaoImpl) inject(injext application.InjectionExt,
 }
 
 
-func (inst*p1b6e41313c_demo1_TaDaoImpl) getSrc(ie application.InjectionExt)p1b6e41313.Source{
-    return ie.GetComponent("#alias-1b6e41313c90dcc6ce0464e19d3529ce-Source").(p1b6e41313.Source)
+func (inst*p1b6e41313c_demo1_TaDaoImpl) getSrc(ie application.InjectionExt)p1b6e41313.MyAgent{
+    return ie.GetComponent("#alias-1b6e41313c90dcc6ce0464e19d3529ce-MyAgent").(p1b6e41313.MyAgent)
 }
 
 
@@ -86,8 +87,8 @@ func (inst* p1b6e41313c_demo1_TbDaoImpl) inject(injext application.InjectionExt,
 }
 
 
-func (inst*p1b6e41313c_demo1_TbDaoImpl) getSrc(ie application.InjectionExt)p1b6e41313.Source{
-    return ie.GetComponent("#alias-1b6e41313c90dcc6ce0464e19d3529ce-Source").(p1b6e41313.Source)
+func (inst*p1b6e41313c_demo1_TbDaoImpl) getSrc(ie application.InjectionExt)p1b6e41313.MyAgent{
+    return ie.GetComponent("#alias-1b6e41313c90dcc6ce0464e19d3529ce-MyAgent").(p1b6e41313.MyAgent)
 }
 
 
@@ -130,8 +131,8 @@ func (inst* p1b6e41313c_demo1_TcDaoImpl) inject(injext application.InjectionExt,
 }
 
 
-func (inst*p1b6e41313c_demo1_TcDaoImpl) getSrc(ie application.InjectionExt)p1b6e41313.Source{
-    return ie.GetComponent("#alias-1b6e41313c90dcc6ce0464e19d3529ce-Source").(p1b6e41313.Source)
+func (inst*p1b6e41313c_demo1_TcDaoImpl) getSrc(ie application.InjectionExt)p1b6e41313.MyAgent{
+    return ie.GetComponent("#alias-1b6e41313c90dcc6ce0464e19d3529ce-MyAgent").(p1b6e41313.MyAgent)
 }
 
 
@@ -140,7 +141,7 @@ func (inst*p1b6e41313c_demo1_TcDaoImpl) getSrc(ie application.InjectionExt)p1b6e
 //
 // id:com-1b6e41313c90dcc6-demo1-TableReg
 // class:class-512a309140d0ad99eb1c95c8dc0d02f9-GroupRegistry
-// alias:alias-1b6e41313c90dcc6ce0464e19d3529ce-Source
+// alias:alias-1b6e41313c90dcc6ce0464e19d3529ce-MyAgent
 // scope:singleton
 //
 type p1b6e41313c_demo1_TableReg struct {
@@ -150,7 +151,7 @@ func (inst* p1b6e41313c_demo1_TableReg) register(cr application.ComponentRegistr
 	r := cr.NewRegistration()
 	r.ID = "com-1b6e41313c90dcc6-demo1-TableReg"
 	r.Classes = "class-512a309140d0ad99eb1c95c8dc0d02f9-GroupRegistry"
-	r.Aliases = "alias-1b6e41313c90dcc6ce0464e19d3529ce-Source"
+	r.Aliases = "alias-1b6e41313c90dcc6ce0464e19d3529ce-MyAgent"
 	r.Scope = "singleton"
 	r.NewFunc = inst.new
 	r.InjectFunc = inst.inject
@@ -167,15 +168,33 @@ func (inst* p1b6e41313c_demo1_TableReg) inject(injext application.InjectionExt, 
 	nop(ie, com)
 
 	
+    com.DSMan = inst.getDSMan(ie)
     com.Prefix = inst.getPrefix(ie)
+    com.URI = inst.getURI(ie)
+    com.SourceName = inst.getSourceName(ie)
 
 
     return nil
 }
 
 
+func (inst*p1b6e41313c_demo1_TableReg) getDSMan(ie application.InjectionExt)p512a30914.DataSourceManager{
+    return ie.GetComponent("#alias-512a309140d0ad99eb1c95c8dc0d02f9-DataSourceManager").(p512a30914.DataSourceManager)
+}
+
+
 func (inst*p1b6e41313c_demo1_TableReg) getPrefix(ie application.InjectionExt)string{
-    return ie.GetString("table-group.demo1.table-name-prefix")
+    return ie.GetString("datagroup.demo1.table-name-prefix")
+}
+
+
+func (inst*p1b6e41313c_demo1_TableReg) getURI(ie application.InjectionExt)string{
+    return ie.GetString("datagroup.demo1.uri")
+}
+
+
+func (inst*p1b6e41313c_demo1_TableReg) getSourceName(ie application.InjectionExt)string{
+    return ie.GetString("datagroup.demo1.datasource")
 }
 
 

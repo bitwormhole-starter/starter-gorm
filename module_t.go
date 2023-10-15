@@ -11,10 +11,10 @@ const (
 	theModuleName     = "github.com/starter-go/libgorm"
 	theModuleVersion  = "v0.9.10"
 	theModuleRevision = 11
-	theModuleResPath  = "src/main/resources"
+	theModuleResPath  = "src/lib/resources"
 )
 
-//go:embed "src/main/resources"
+//go:embed "src/lib/resources"
 var theModuleResFS embed.FS
 
 // ModuleBuilder 用于创建模块 ['github.com/starter-go/libgorm']

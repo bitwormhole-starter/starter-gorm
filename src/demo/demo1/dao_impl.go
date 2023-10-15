@@ -9,7 +9,7 @@ type TaDaoImpl struct {
 
 	//starter:component
 
-	Src Source //starter:inject("#")
+	Src MyAgent //starter:inject("#")
 }
 
 func (inst *TaDaoImpl) _impl() TaDao {
@@ -27,7 +27,7 @@ func (inst *TaDaoImpl) Find(id int) (*TableA, error) {
 type TbDaoImpl struct {
 	//starter:component
 
-	Src Source //starter:inject("#")
+	Src MyAgent //starter:inject("#")
 
 }
 
@@ -47,7 +47,7 @@ type TcDaoImpl struct {
 
 	//starter:component
 
-	Src Source //starter:inject("#")
+	Src MyAgent //starter:inject("#")
 
 }
 
